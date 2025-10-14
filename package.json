@@ -1,0 +1,43 @@
+{
+  "name": "vite-plugin-localization-ai",
+  "version": "1.0.0",
+  "description": "Vite plugin to generate localization jsons using AI",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "author": "Alexey Ripenko <alexey@ripenko.ru>",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "22.14.1",
+    "@google/genai": "1.24.0",
+    "jsonc-parser": "3.3.1",
+    "typescript": "5.9.3",
+    "vite": "7.1.9"
+  },
+  "devDependencies": {
+    "vitest": "3.2.4"
+  },
+  "keywords": [
+    "vite",
+    "plugin",
+    "json",
+    "jsonc",
+    "typescript",
+    "codegen",
+    "localization",
+    "ai"
+  ]
+}
