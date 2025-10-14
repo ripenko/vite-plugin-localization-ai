@@ -1,2 +1,3 @@
-# vite-plugin-localizationkeys
-Vite plugin to generate localization keys that could be possible to be used by localizationservice
+# vite-plugin-localization-ai
+
+Vite plugin to generate localization jsons using AI
