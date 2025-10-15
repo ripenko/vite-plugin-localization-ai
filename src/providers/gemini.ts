@@ -2,9 +2,12 @@ import { GoogleGenAI } from "@google/genai";
 
 export async function translate(
   sourceJson: Record<string, any>,
-  targetLang: string,
+  targetLocale: string,
+  targetPromt: string,
   apiKey?: string,
-  extraPromt?: string
+  extraPromt?: string,
+  temperature?: number,
+  seed?: number
 ) {
   const client = new GoogleGenAI({
     apiKey: apiKey,
@@ -12,22 +15,41 @@ export async function translate(
 
   const text = JSON.stringify(sourceJson, null, 2);
 
-  const response = await client.models.generateContent({
-    model: "gemini-2.5-flash",
-    contents: `You are a professional application interface translator.
-Translate the JSON.
+  const config = {
+    thinkingConfig: {
+      thinkingBudget: 0,
+    },
+    temperature: temperature,
+    seed: seed,
+    responseMimeType: "application/json",
+    systemInstruction: [
+      {
+        text: `Translate according to locale codes (ISO 639/3166). Use language code and region code from locale! Translate JSON values exactly, keep keys and structure. The response must be plain text — no Markdown`,
+      },
+    ],
+  };
+  const model = "gemini-2.5-flash";
+  const contents = [
+    {
+      role: "user",
+      parts: [
+        {
+          text: `You are a professional application interface translator.
+Translate the JSON into ${targetPromt} (ISO locale: ${targetLocale}).
 JSON:
 ${text}
 
-Target language is "${targetLang}". ${extraPromt || ""}
+${extraPromt || ""}
 `,
-    config: {
-      systemInstruction:
-        "Translate JSON values exactly, keep keys and structure. The response must be plain text — no Markdown",
-      temperature: 0,
-      seed: 42,
-      responseMimeType: "application/json",
+        },
+      ],
     },
+  ];
+
+  const response = await client.models.generateContent({
+    contents: contents,
+    model: model,
+    config: config,
   });
 
   const translatedText = response.text?.trim() || "{}";
