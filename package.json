@@ -1,14 +1,20 @@
 {
   "name": "vite-plugin-localization-ai",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Vite plugin to generate localization jsons using AI",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/index.js",
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./providers/gemini": {
+      "import": "./dist/providers/gemini.js",
+      "require": "./dist/providers/gemini.js",
+      "types": "./dist/providers/gemini.d.ts"
     }
   },
   "files": [
